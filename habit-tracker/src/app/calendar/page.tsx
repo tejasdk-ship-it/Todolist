@@ -21,18 +21,21 @@ import { MobileNav } from '@/components/MobileNav';
 import { Navbar } from '@/components/Navbar';
 
 export default function CalendarPage() {
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const [currentDate, setCurrentDate] = useState<Date>(() => new Date('2026-10-14T00:00:00'));
+  const [todayStr, setTodayStr] = useState<string>('2026-10-14');
   const [habits, setHabits] = useState<Habit[]>([]);
   const [completions, setCompletions] = useState<HabitCompletion[]>([]);
-  const [selectedDateStr, setSelectedDateStr] = useState<string | null>(null);
-
-  const todayStr = getTodayDateString();
+  const [selectedDateStr, setSelectedDateStr] = useState<string>('2026-10-14');
 
   useEffect(() => {
+    const now = new Date();
+    setCurrentDate(now);
+    const dStr = getTodayDateString();
+    setTodayStr(dStr);
+    setSelectedDateStr(dStr);
     setHabits(AppStorage.getHabits().filter((h) => h.status !== 'archived'));
     setCompletions(AppStorage.getCompletions());
-    setSelectedDateStr(todayStr);
-  }, [todayStr]);
+  }, []);
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth(); // 0-indexed

@@ -15,6 +15,9 @@ export function formatTime(timeStr?: string): string {
 }
 
 export function getTodayDateString(): string {
+  if (typeof window === 'undefined') {
+    return '2026-10-14';
+  }
   const d = new Date();
   const year = d.getFullYear();
   const month = String(d.getMonth() + 1).padStart(2, '0');

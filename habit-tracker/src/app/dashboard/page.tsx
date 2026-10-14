@@ -40,15 +40,8 @@ export default function DashboardPage() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedNoteHabit, setSelectedNoteHabit] = useState<Habit | null>(null);
   const [quoteIndex, setQuoteIndex] = useState(0);
-
-  const todayStr = getTodayDateString();
-  const todayDateObj = new Date();
-  const formattedToday = todayDateObj.toLocaleDateString('en-US', {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  });
+  const [todayStr, setTodayStr] = useState('2026-10-14');
+  const [formattedToday, setFormattedToday] = useState('Wednesday, October 14, 2026');
 
   const loadData = () => {
     setUser(AppStorage.getUser());
@@ -57,9 +50,19 @@ export default function DashboardPage() {
   };
 
   useEffect(() => {
+    const now = new Date();
+    setTodayStr(getTodayDateString());
+    setFormattedToday(
+      now.toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+      })
+    );
     loadData();
     // Rotate quote based on day of month
-    setQuoteIndex(new Date().getDate() % MOTIVATIONAL_QUOTES.length);
+    setQuoteIndex(now.getDate() % MOTIVATIONAL_QUOTES.length);
   }, []);
 
   // Filter today's scheduled habits

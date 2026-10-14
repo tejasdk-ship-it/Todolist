@@ -49,10 +49,10 @@ export default function StatisticsPage() {
   const [user, setUser] = useState<UserProfile>(AppStorage.getUser());
   const [habits, setHabits] = useState<Habit[]>([]);
   const [completions, setCompletions] = useState<HabitCompletion[]>([]);
-
-  const todayStr = getTodayDateString();
+  const [todayStr, setTodayStr] = useState('2026-10-14');
 
   useEffect(() => {
+    setTodayStr(getTodayDateString());
     setUser(AppStorage.getUser());
     setHabits(AppStorage.getHabits());
     setCompletions(AppStorage.getCompletions());
