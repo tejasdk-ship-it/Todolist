@@ -250,7 +250,16 @@ CREATE TRIGGER on_auth_user_created
     FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
 
 -- ==========================================================
--- SEED DATA FUNCTION FOR TEST/DEVELOPMENT (OPTIONAL)
+-- GRANT SCHEMA AND TABLE PERMISSIONS TO CLIENT ROLES
 -- ==========================================================
+GRANT USAGE ON SCHEMA public TO anon, authenticated;
+GRANT ALL ON ALL TABLES IN SCHEMA public TO anon, authenticated;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated;
+GRANT ALL ON ALL ROUTINES IN SCHEMA public TO anon, authenticated;
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO anon, authenticated;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO anon, authenticated;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON ROUTINES TO anon, authenticated;
+
 COMMENT ON TABLE public.habits IS 'Daily habits configured by individual users';
 COMMENT ON TABLE public.habit_completions IS 'Daily completion records preventing duplicate days';
