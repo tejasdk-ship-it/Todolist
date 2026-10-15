@@ -25,7 +25,7 @@ export function MobileNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 px-2 py-1.5 safe-area-pb">
+    <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-950/85 backdrop-blur-2xl border-t border-white/10 z-40 px-2 py-1.5 safe-area-pb text-white">
       <div className="flex items-center justify-around">
         {MOBILE_ITEMS.map((item) => {
           const Icon = item.icon;
@@ -34,20 +34,20 @@ export function MobileNav() {
             <Link
               key={item.name}
               href={item.href}
-              className={`flex flex-col items-center py-1 px-2.5 rounded-lg text-[10px] font-medium transition-colors ${
+              className={`flex flex-col items-center py-1 px-2.5 rounded-2xl text-[10px] font-medium transition-all ${
                 isActive
-                  ? 'text-emerald-600 font-semibold'
-                  : 'text-slate-500 hover:text-slate-900'
+                  ? 'text-emerald-400 font-bold'
+                  : 'text-slate-400 hover:text-white'
               }`}
             >
               <div
-                className={`p-1 rounded-xl transition-all ${
-                  isActive ? 'bg-emerald-50 text-emerald-600 scale-105' : ''
+                className={`p-1.5 rounded-xl transition-all ${
+                  isActive ? 'bg-white/10 text-emerald-400 border border-white/15 scale-105' : ''
                 }`}
               >
-                <Icon className="w-5 h-5" />
+                <Icon className="w-4 h-4" />
               </div>
-              <span className="mt-0.5">{item.name}</span>
+              <span className="mt-0.5 text-[9px]">{item.name}</span>
             </Link>
           );
         })}

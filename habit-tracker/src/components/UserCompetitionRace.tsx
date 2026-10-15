@@ -133,40 +133,40 @@ export function UserCompetitionRace({
   };
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-200/80 p-5 sm:p-6 shadow-xs relative overflow-hidden">
+    <div className="bg-slate-900/60 backdrop-blur-2xl border border-white/15 p-5 sm:p-7 rounded-[32px] shadow-2xl relative overflow-hidden text-white">
       {/* Background Subtle Gradient */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-emerald-500/5 via-teal-500/5 to-transparent rounded-full pointer-events-none -mr-20 -mt-20" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-emerald-500/10 via-teal-500/5 to-transparent rounded-full pointer-events-none -mr-20 -mt-20" />
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 relative">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 relative z-10">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center ring-1 ring-amber-500/20">
+          <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30 shadow-lg shadow-amber-950/40">
             <Trophy className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-base sm:text-lg font-bold text-slate-900">{title}</h3>
+              <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">{title}</h3>
               <span className="flex h-2 w-2 relative">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              <span className="text-[10px] uppercase tracking-wider font-extrabold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
+              <span className="text-[10px] uppercase tracking-wider font-extrabold text-emerald-400 bg-emerald-500/20 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
                 Live Duel
               </span>
             </div>
-            <p className="text-xs text-slate-500 mt-0.5">{subtitle}</p>
+            <p className="text-xs text-slate-400 mt-0.5 font-light">{subtitle}</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 bg-slate-50 p-1.5 px-3 rounded-xl border border-slate-200/70 self-start sm:self-auto">
-          <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+        <div className="flex items-center gap-2 text-xs font-semibold text-slate-300 bg-white/5 p-1.5 px-3 rounded-full border border-white/10 self-start sm:self-auto backdrop-blur-md">
+          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
           <span>Resetting at midnight</span>
         </div>
       </div>
 
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="mb-4 p-3 rounded-2xl bg-emerald-600 text-white text-xs font-bold flex items-center justify-between animate-in fade-in slide-in-from-top-2 shadow-lg">
+        <div className="mb-4 p-3 rounded-2xl bg-emerald-600 text-white text-xs font-bold flex items-center justify-between shadow-xl animate-in fade-in slide-in-from-top-2 border border-emerald-400/30">
           <span className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-200" /> {toastMessage}
           </span>
@@ -177,7 +177,7 @@ export function UserCompetitionRace({
       )}
 
       {/* Competitors List */}
-      <div className="space-y-3 relative">
+      <div className="space-y-3 relative z-10">
         {sortedCompetitors.map((comp, idx) => {
           const rank = idx + 1;
           const percentage =
@@ -187,25 +187,25 @@ export function UserCompetitionRace({
 
           // Rank styling
           let rankBadge = (
-            <div className="w-7 h-7 rounded-xl bg-slate-100 text-slate-600 font-bold text-xs flex items-center justify-center">
+            <div className="w-7 h-7 rounded-xl bg-white/5 border border-white/10 text-slate-400 font-bold text-xs flex items-center justify-center">
               #{rank}
             </div>
           );
           if (rank === 1) {
             rankBadge = (
-              <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 text-white font-extrabold text-xs flex items-center justify-center shadow-xs ring-2 ring-amber-300/40">
+              <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 font-extrabold text-xs flex items-center justify-center shadow-lg ring-1 ring-amber-300/40">
                 🥇
               </div>
             );
           } else if (rank === 2) {
             rankBadge = (
-              <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-slate-300 to-slate-500 text-white font-extrabold text-xs flex items-center justify-center shadow-xs">
+              <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-slate-300 to-slate-400 text-slate-950 font-extrabold text-xs flex items-center justify-center shadow-md">
                 🥈
               </div>
             );
           } else if (rank === 3) {
             rankBadge = (
-              <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-amber-700 to-amber-900 text-white font-extrabold text-xs flex items-center justify-center shadow-xs">
+              <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-amber-700 to-amber-900 text-white font-extrabold text-xs flex items-center justify-center shadow-md">
                 🥉
               </div>
             );
@@ -216,8 +216,8 @@ export function UserCompetitionRace({
               key={comp.id}
               className={`p-4 rounded-2xl border transition-all duration-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
                 comp.isCurrentUser
-                  ? 'bg-gradient-to-r from-emerald-50/80 via-white to-teal-50/50 border-emerald-300 ring-2 ring-emerald-500/10 shadow-sm'
-                  : 'bg-white border-slate-200/90 hover:border-slate-300 hover:shadow-xs'
+                  ? 'bg-white/10 border-emerald-400/40 ring-1 ring-emerald-400/30 shadow-xl'
+                  : 'bg-slate-950/40 border-white/10 hover:border-white/20'
               }`}
             >
               {/* Left: Rank, Avatar, Name */}
@@ -231,8 +231,8 @@ export function UserCompetitionRace({
                     alt={comp.full_name}
                     className={`w-11 h-11 rounded-full object-cover ${
                       comp.isCurrentUser
-                        ? 'ring-2 ring-emerald-500'
-                        : 'ring-1 ring-slate-200'
+                        ? 'ring-2 ring-emerald-400'
+                        : 'ring-1 ring-white/20'
                     }`}
                   />
                   {percentage === 100 && (
@@ -244,20 +244,20 @@ export function UserCompetitionRace({
 
                 <div className="min-w-0">
                   <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className="text-sm font-bold text-slate-900 truncate">
+                    <span className="text-sm font-bold text-white truncate">
                       {comp.full_name}
                     </span>
                     {comp.isCurrentUser && (
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-600 text-white">
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500 text-slate-950">
                         YOU
                       </span>
                     )}
                   </div>
                   <div className="flex items-center gap-2 mt-0.5">
                     <span className="text-xs text-slate-400">@{comp.username}</span>
-                    <span className="text-slate-300">&bull;</span>
-                    <span className="text-[11px] font-semibold text-amber-600 flex items-center gap-0.5">
-                      <Flame className="w-3 h-3 fill-amber-500" /> {comp.streak}d streak
+                    <span className="text-slate-600">&bull;</span>
+                    <span className="text-[11px] font-semibold text-amber-400 flex items-center gap-0.5">
+                      <Flame className="w-3 h-3 fill-amber-400" /> {comp.streak}d streak
                     </span>
                   </div>
                 </div>
@@ -266,16 +266,16 @@ export function UserCompetitionRace({
               {/* Middle: Progress Bar & Status */}
               <div className="flex-1 max-w-sm sm:px-4">
                 <div className="flex items-center justify-between text-xs mb-1.5">
-                  <span className="font-bold text-slate-700">
+                  <span className="font-semibold text-slate-300">
                     {comp.todayCompleted} of {comp.todayTotal} habits
                   </span>
                   <span
                     className={`font-extrabold ${
                       percentage === 100
-                        ? 'text-emerald-600'
+                        ? 'text-emerald-400'
                         : percentage >= 50
-                        ? 'text-teal-600'
-                        : 'text-slate-500'
+                        ? 'text-teal-400'
+                        : 'text-slate-400'
                     }`}
                   >
                     {percentage}% done
@@ -283,53 +283,53 @@ export function UserCompetitionRace({
                 </div>
 
                 {/* Progress track */}
-                <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden p-0.5">
+                <div className="w-full h-2.5 bg-white/10 rounded-full overflow-hidden p-0.5 border border-white/5">
                   <div
                     className={`h-full rounded-full transition-all duration-700 ${
                       percentage === 100
-                        ? 'bg-gradient-to-r from-emerald-500 to-teal-500 shadow-2xs'
+                        ? 'bg-gradient-to-r from-emerald-400 to-teal-400 shadow-lg shadow-emerald-500/50'
                         : percentage >= 50
-                        ? 'bg-gradient-to-r from-teal-500 to-cyan-500'
+                        ? 'bg-gradient-to-r from-teal-400 to-cyan-400'
                         : 'bg-gradient-to-r from-amber-400 to-amber-500'
                     }`}
                     style={{ width: `${percentage}%` }}
                   />
                 </div>
 
-                <div className="mt-1 flex items-center justify-between text-[11px] text-slate-400">
+                <div className="mt-1 flex items-center justify-between text-[11px] text-slate-400 font-light">
                   <span>
                     {percentage === 100
-                      ? '🎯 All target habits done!'
+                      ? '🎯 Target habits completed!'
                       : `${comp.todayTotal - comp.todayCompleted} remaining`}
                   </span>
-                  <span className="font-medium text-emerald-700">+{comp.points} pts</span>
+                  <span className="font-semibold text-emerald-400">+{comp.points} pts</span>
                 </div>
               </div>
 
               {/* Right: Actions (Cheer / Message) */}
-              <div className="flex items-center gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+              <div className="flex items-center gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-white/10">
                 {!comp.isCurrentUser ? (
                   <>
                     <button
                       onClick={() => handleQuickCheer(comp)}
                       title={`Send cheer to ${comp.full_name}`}
-                      className="px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200/60 transition-all flex items-center gap-1 active:scale-95 shadow-2xs"
+                      className="px-3 py-1.5 rounded-full text-xs font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 transition-all flex items-center gap-1 active:scale-95 shadow-xs"
                     >
-                      <Flame className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                      <Flame className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                       <span>Cheer</span>
                     </button>
 
                     <button
                       onClick={() => setActiveChatUser(comp)}
                       title={`Send message to ${comp.full_name}`}
-                      className="px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-2xs transition-all flex items-center gap-1.5 active:scale-95"
+                      className="px-3 py-1.5 rounded-full text-xs font-bold bg-white hover:bg-emerald-50 text-slate-950 shadow-md transition-all flex items-center gap-1.5 active:scale-95"
                     >
                       <MessageSquare className="w-3.5 h-3.5" />
                       <span>Message</span>
                     </button>
                   </>
                 ) : (
-                  <span className="text-xs font-bold text-emerald-700 bg-emerald-100/70 px-3 py-1 rounded-xl border border-emerald-200">
+                  <span className="text-xs font-bold text-emerald-300 bg-emerald-500/20 px-3 py-1 rounded-full border border-emerald-500/30">
                     Your Live Position
                   </span>
                 )}

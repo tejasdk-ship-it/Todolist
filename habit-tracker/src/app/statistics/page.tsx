@@ -151,7 +151,7 @@ export default function StatisticsPage() {
   }));
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col lg:flex-row pb-20 lg:pb-0">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col lg:flex-row pb-20 lg:pb-0">
       <Sidebar />
 
       <div className="flex-1 lg:pl-64 flex flex-col">
@@ -159,8 +159,8 @@ export default function StatisticsPage() {
 
         <main className="p-4 sm:p-6 lg:p-8 space-y-6 max-w-6xl mx-auto w-full">
           {/* Filter Bar */}
-          <div className="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs">
-            <span className="text-xs font-bold text-slate-700">Timeframe:</span>
+          <div className="flex items-center justify-between bg-slate-900/60 backdrop-blur-xl p-4 rounded-3xl border border-white/10 shadow-xl">
+            <span className="text-xs font-bold text-slate-300">Timeframe:</span>
             <div className="flex items-center gap-1.5">
               {[
                 { id: '7', label: 'Last 7 Days' },
@@ -171,10 +171,10 @@ export default function StatisticsPage() {
                 <button
                   key={tab.id}
                   onClick={() => setFilterPeriod(tab.id as any)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
                     filterPeriod === tab.id
-                      ? 'bg-emerald-600 text-white shadow-xs'
-                      : 'text-slate-600 hover:bg-slate-100'
+                      ? 'bg-emerald-400 text-slate-950 shadow-md shadow-emerald-500/20'
+                      : 'text-slate-400 hover:text-white hover:bg-white/10'
                   }`}
                 >
                   {tab.label}
@@ -185,50 +185,50 @@ export default function StatisticsPage() {
 
           {/* Key Metrics Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
-              <div className="flex items-center justify-between text-xs text-slate-500">
+            <div className="bg-slate-900/60 backdrop-blur-xl p-5 rounded-3xl border border-white/10 shadow-xl text-white">
+              <div className="flex items-center justify-between text-xs text-slate-400">
                 <span>Active Habits</span>
-                <Activity className="w-4 h-4 text-emerald-600" />
+                <Activity className="w-4 h-4 text-emerald-400" />
               </div>
-              <div className="text-2xl font-extrabold text-slate-900 mt-2">
+              <div className="text-2xl font-extrabold text-white mt-2">
                 {activeHabits.length}
               </div>
-              <span className="text-[11px] text-emerald-600 font-medium">Currently tracked</span>
+              <span className="text-[11px] text-emerald-400 font-medium">Currently tracked</span>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
-              <div className="flex items-center justify-between text-xs text-slate-500">
+            <div className="bg-slate-900/60 backdrop-blur-xl p-5 rounded-3xl border border-white/10 shadow-xl text-white">
+              <div className="flex items-center justify-between text-xs text-slate-400">
                 <span>Occurrences Completed</span>
-                <CheckCircle2 className="w-4 h-4 text-teal-600" />
+                <CheckCircle2 className="w-4 h-4 text-teal-400" />
               </div>
-              <div className="text-2xl font-extrabold text-slate-900 mt-2">
+              <div className="text-2xl font-extrabold text-white mt-2">
                 {totalCompletions}
               </div>
-              <span className="text-[11px] text-teal-600 font-medium">In selected period</span>
+              <span className="text-[11px] text-teal-400 font-medium">In selected period</span>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
-              <div className="flex items-center justify-between text-xs text-slate-500">
+            <div className="bg-slate-900/60 backdrop-blur-xl p-5 rounded-3xl border border-white/10 shadow-xl text-white">
+              <div className="flex items-center justify-between text-xs text-slate-400">
                 <span>Total Time Invested</span>
-                <Clock className="w-4 h-4 text-indigo-600" />
+                <Clock className="w-4 h-4 text-cyan-400" />
               </div>
-              <div className="text-2xl font-extrabold text-slate-900 mt-2">
+              <div className="text-2xl font-extrabold text-white mt-2">
                 {Math.round(totalMinutes / 60)} hrs
               </div>
-              <span className="text-[11px] text-indigo-600 font-medium">
+              <span className="text-[11px] text-cyan-400 font-medium">
                 {totalMinutes} total minutes
               </span>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
-              <div className="flex items-center justify-between text-xs text-slate-500">
+            <div className="bg-slate-900/60 backdrop-blur-xl p-5 rounded-3xl border border-white/10 shadow-xl text-white">
+              <div className="flex items-center justify-between text-xs text-slate-400">
                 <span>Current Streak</span>
-                <Flame className="w-4 h-4 text-amber-500" />
+                <Flame className="w-4 h-4 text-amber-400" />
               </div>
-              <div className="text-2xl font-extrabold text-slate-900 mt-2">
+              <div className="text-2xl font-extrabold text-white mt-2">
                 {user.current_streak} Days
               </div>
-              <span className="text-[11px] text-amber-600 font-medium">
+              <span className="text-[11px] text-amber-400 font-medium">
                 Best: {user.longest_streak} days
               </span>
             </div>
@@ -237,13 +237,13 @@ export default function StatisticsPage() {
           {/* Charts Row */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Completion Trend Area Chart */}
-            <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
+            <div className="bg-slate-900/60 backdrop-blur-xl p-5 rounded-3xl border border-white/10 shadow-xl text-white">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h3 className="text-sm font-bold text-slate-900">Completion Rate Trend</h3>
+                  <h3 className="text-sm font-bold text-white">Completion Rate Trend</h3>
                   <p className="text-xs text-slate-400">Daily completion percentage</p>
                 </div>
-                <TrendingUp className="w-4 h-4 text-emerald-600" />
+                <TrendingUp className="w-4 h-4 text-emerald-400" />
               </div>
 
               <div className="h-64 w-full">
@@ -255,13 +255,16 @@ export default function StatisticsPage() {
                         <stop offset="95%" stopColor="#10b981" stopOpacity={0.0} />
                       </linearGradient>
                     </defs>
-                    <XAxis dataKey="date" stroke="#94a3b8" fontSize={11} />
-                    <YAxis unit="%" stroke="#94a3b8" fontSize={11} domain={[0, 100]} />
+                    <XAxis dataKey="date" stroke="#64748b" fontSize={11} />
+                    <YAxis unit="%" stroke="#64748b" fontSize={11} domain={[0, 100]} />
                     <Tooltip
                       contentStyle={{
-                        borderRadius: '12px',
-                        border: '1px solid #e2e8f0',
+                        borderRadius: '16px',
+                        backgroundColor: '#0f172a',
+                        border: '1px solid rgba(255,255,255,0.15)',
+                        color: '#f8fafc',
                         fontSize: '12px',
+                        boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
                       }}
                     />
                     <Area
@@ -279,31 +282,34 @@ export default function StatisticsPage() {
             </div>
 
             {/* Time Invested Bar Chart */}
-            <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
+            <div className="bg-slate-900/60 backdrop-blur-xl p-5 rounded-3xl border border-white/10 shadow-xl text-white">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h3 className="text-sm font-bold text-slate-900">Minutes Spent Per Day</h3>
+                  <h3 className="text-sm font-bold text-white">Minutes Spent Per Day</h3>
                   <p className="text-xs text-slate-400">Time invested in scheduled routines</p>
                 </div>
-                <Clock className="w-4 h-4 text-indigo-600" />
+                <Clock className="w-4 h-4 text-cyan-400" />
               </div>
 
               <div className="h-64 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={trendData}>
-                    <XAxis dataKey="date" stroke="#94a3b8" fontSize={11} />
-                    <YAxis unit="m" stroke="#94a3b8" fontSize={11} />
+                    <XAxis dataKey="date" stroke="#64748b" fontSize={11} />
+                    <YAxis unit="m" stroke="#64748b" fontSize={11} />
                     <Tooltip
                       contentStyle={{
-                        borderRadius: '12px',
-                        border: '1px solid #e2e8f0',
+                        borderRadius: '16px',
+                        backgroundColor: '#0f172a',
+                        border: '1px solid rgba(255,255,255,0.15)',
+                        color: '#f8fafc',
                         fontSize: '12px',
+                        boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
                       }}
                     />
                     <Bar
                       dataKey="minutes"
                       name="Minutes Spent"
-                      fill="#6366f1"
+                      fill="#06b6d4"
                       radius={[6, 6, 0, 0]}
                     />
                   </BarChart>
@@ -315,28 +321,28 @@ export default function StatisticsPage() {
           {/* Consistency Rankings & Category Breakdown */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Habit Consistency Table (2 cols) */}
-            <div className="lg:col-span-2 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
-              <h3 className="text-sm font-bold text-slate-900 mb-1">Habit Consistency Rankings</h3>
+            <div className="lg:col-span-2 bg-slate-900/60 backdrop-blur-xl p-5 rounded-3xl border border-white/10 shadow-xl text-white">
+              <h3 className="text-sm font-bold text-white mb-1">Habit Consistency Rankings</h3>
               <p className="text-xs text-slate-400 mb-4">
                 Individual habit execution rates in the active window
               </p>
 
               <div className="space-y-3">
                 {habitConsistency.map(({ habit, completedDays, scheduledDays, rate }) => (
-                  <div key={habit.id} className="p-3 rounded-xl border border-slate-100 bg-slate-50/50">
+                  <div key={habit.id} className="p-3.5 rounded-2xl border border-white/10 bg-slate-950/60">
                     <div className="flex items-center justify-between text-xs mb-1.5">
                       <div className="flex items-center gap-2">
                         <span
                           className="w-2.5 h-2.5 rounded-full"
                           style={{ backgroundColor: habit.color }}
                         />
-                        <span className="font-bold text-slate-900">{habit.name}</span>
-                        <span className="text-[10px] text-slate-500">({habit.category})</span>
+                        <span className="font-bold text-white">{habit.name}</span>
+                        <span className="text-[10px] text-slate-400">({habit.category})</span>
                       </div>
-                      <span className="font-bold text-slate-900">{rate}%</span>
+                      <span className="font-bold text-emerald-400">{rate}%</span>
                     </div>
 
-                    <div className="w-full h-2 rounded-full bg-slate-200 overflow-hidden">
+                    <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
                       <div
                         className="h-full rounded-full transition-all duration-500"
                         style={{
@@ -346,7 +352,7 @@ export default function StatisticsPage() {
                       />
                     </div>
 
-                    <div className="flex items-center justify-between text-[11px] text-slate-400 mt-1">
+                    <div className="flex items-center justify-between text-[11px] text-slate-400 mt-1.5">
                       <span>{completedDays} completed</span>
                       <span>{scheduledDays} scheduled</span>
                     </div>
@@ -358,8 +364,8 @@ export default function StatisticsPage() {
             {/* Category Donut & Scoring Rules */}
             <div className="space-y-6">
               {/* Category Chart */}
-              <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
-                <h3 className="text-sm font-bold text-slate-900 mb-1">Category Distribution</h3>
+              <div className="bg-slate-900/60 backdrop-blur-xl p-5 rounded-3xl border border-white/10 shadow-xl text-white">
+                <h3 className="text-sm font-bold text-white mb-1">Category Distribution</h3>
                 <p className="text-xs text-slate-400 mb-3">Completions by domain</p>
 
                 <div className="h-44 w-full">
@@ -379,14 +385,21 @@ export default function StatisticsPage() {
                           <Cell key={`cell-${index}`} fill={entry.color} />
                         ))}
                       </Pie>
-                      <Tooltip />
+                      <Tooltip
+                        contentStyle={{
+                          borderRadius: '12px',
+                          backgroundColor: '#0f172a',
+                          border: '1px solid rgba(255,255,255,0.15)',
+                          color: '#f8fafc',
+                        }}
+                      />
                     </PieChart>
                   </ResponsiveContainer>
                 </div>
 
                 <div className="flex items-center justify-center gap-2 flex-wrap pt-2">
                   {categoryChartData.map((cat) => (
-                    <div key={cat.name} className="flex items-center gap-1 text-[11px] text-slate-600">
+                    <div key={cat.name} className="flex items-center gap-1 text-[11px] text-slate-400">
                       <span className="w-2 h-2 rounded-full" style={{ backgroundColor: cat.color }} />
                       <span>{cat.name}</span>
                     </div>
@@ -395,26 +408,26 @@ export default function StatisticsPage() {
               </div>
 
               {/* Transparent Scoring Engine Card */}
-              <div className="bg-gradient-to-br from-emerald-500 to-teal-700 text-white p-5 rounded-2xl shadow-md">
+              <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 border border-white/15 text-white p-5 rounded-3xl shadow-xl">
                 <div className="flex items-center gap-2 mb-2 font-bold text-sm">
-                  <Award className="w-4 h-4 text-amber-300" />
+                  <Award className="w-4 h-4 text-amber-400" />
                   <span>Fair Scoring Algorithm</span>
                 </div>
-                <p className="text-xs text-emerald-100 leading-relaxed mb-3">
+                <p className="text-xs text-slate-300 leading-relaxed mb-3">
                   Points and consistency are computed dynamically without bias to habit count:
                 </p>
                 <div className="space-y-1.5 text-xs">
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-white/10">
-                    <span>Scheduled Habit Completed</span>
-                    <span className="font-bold text-amber-300">+10 pts</span>
+                  <div className="flex items-center justify-between p-2 rounded-xl bg-white/5 border border-white/10">
+                    <span className="text-slate-300">Scheduled Habit Completed</span>
+                    <span className="font-bold text-emerald-400">+10 pts</span>
                   </div>
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-white/10">
-                    <span>100% Perfect Day Bonus</span>
-                    <span className="font-bold text-amber-300">+5 pts</span>
+                  <div className="flex items-center justify-between p-2 rounded-xl bg-white/5 border border-white/10">
+                    <span className="text-slate-300">100% Perfect Day Bonus</span>
+                    <span className="font-bold text-amber-400">+5 pts</span>
                   </div>
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-white/10">
-                    <span>7-Day Perfect Streak</span>
-                    <span className="font-bold text-amber-300">+20 pts</span>
+                  <div className="flex items-center justify-between p-2 rounded-xl bg-white/5 border border-white/10">
+                    <span className="text-slate-300">7-Day Perfect Streak</span>
+                    <span className="font-bold text-yellow-400">+20 pts</span>
                   </div>
                 </div>
               </div>

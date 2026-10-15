@@ -80,10 +80,10 @@ export function MessageModal({ isOpen, onClose, friend }: MessageModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white rounded-3xl w-full max-w-lg shadow-2xl border border-slate-100 flex flex-col h-[600px] max-h-[90vh] overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
+      <div className="bg-slate-900/95 backdrop-blur-2xl rounded-3xl w-full max-w-lg shadow-2xl border border-white/20 flex flex-col h-[600px] max-h-[90vh] overflow-hidden text-white">
         {/* Header */}
-        <div className="p-4 px-5 bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-950 text-white flex items-center justify-between">
+        <div className="p-4 px-5 bg-gradient-to-r from-slate-950 via-slate-900 to-emerald-950 text-white flex items-center justify-between border-b border-white/10">
           <div className="flex items-center gap-3">
             <div className="relative">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -92,41 +92,41 @@ export function MessageModal({ isOpen, onClose, friend }: MessageModalProps) {
                 alt={friend.full_name}
                 className="w-11 h-11 rounded-full object-cover ring-2 ring-emerald-400/50"
               />
-              <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full" />
+              <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-slate-950 rounded-full" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="font-bold text-sm text-white">{friend.full_name}</h3>
                 {friend.streak !== undefined && (
-                  <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30 flex items-center gap-0.5">
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30 flex items-center gap-0.5">
                     <Flame className="w-2.5 h-2.5 fill-amber-400 text-amber-400" />
                     {friend.streak}d
                   </span>
                 )}
               </div>
-              <p className="text-xs text-slate-300">@{friend.username} &bull; Competition Partner</p>
+              <p className="text-xs text-slate-400">@{friend.username} &bull; Competition Partner</p>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-full hover:bg-white/10 text-slate-300 hover:text-white transition-colors"
+            className="p-1.5 rounded-full hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Quick Cheer Shortcuts Strip */}
-        <div className="bg-slate-50 border-b border-slate-100 p-2.5 px-4 overflow-x-auto">
+        <div className="bg-white/5 border-b border-white/10 p-2.5 px-4 overflow-x-auto">
           <div className="flex items-center gap-2 whitespace-nowrap">
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
-              <Sparkles className="w-3 h-3 text-amber-500" /> Quick Cheer:
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
+              <Sparkles className="w-3 h-3 text-amber-400" /> Quick Cheer:
             </span>
             {QUICK_CHEERS.map((cheer, idx) => (
               <button
                 key={idx}
                 onClick={() => handleSend(`${cheer.emoji} ${cheer.text}`, true)}
-                className="px-2.5 py-1 rounded-xl text-xs font-semibold bg-white border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 text-slate-700 transition-all flex items-center gap-1 shadow-2xs active:scale-95"
+                className="px-2.5 py-1 rounded-full text-xs font-semibold bg-white/5 border border-white/10 hover:border-emerald-400 hover:bg-emerald-500/20 text-slate-200 transition-all flex items-center gap-1 active:scale-95 shadow-xs"
               >
                 <span>{cheer.emoji}</span>
                 <span className="hidden sm:inline">{cheer.text.split('!')[0]}!</span>
@@ -136,15 +136,15 @@ export function MessageModal({ isOpen, onClose, friend }: MessageModalProps) {
         </div>
 
         {/* Messages Body */}
-        <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-gradient-to-b from-slate-50/50 to-white">
+        <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-950/40">
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-6 text-slate-400">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3">
+              <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 text-emerald-400 flex items-center justify-center mb-3">
                 <Smile className="w-6 h-6" />
               </div>
-              <p className="text-sm font-bold text-slate-700">No messages yet!</p>
-              <p className="text-xs text-slate-400 mt-1 max-w-xs">
-                Send a cheer or message to {friend.full_name} to celebrate their habit streak or spark a friendly competition!
+              <p className="text-sm font-bold text-white">No messages yet!</p>
+              <p className="text-xs text-slate-400 mt-1 max-w-xs font-light">
+                Send a cheer or message to {friend.full_name} to celebrate their habit streak or spark a friendly race!
               </p>
             </div>
           ) : (
@@ -156,24 +156,24 @@ export function MessageModal({ isOpen, onClose, friend }: MessageModalProps) {
                   className={`flex flex-col ${isMine ? 'items-end' : 'items-start'}`}
                 >
                   <div
-                    className={`max-w-[82%] rounded-2xl p-3 shadow-2xs text-xs sm:text-sm ${
+                    className={`max-w-[82%] rounded-2xl p-3 text-xs sm:text-sm ${
                       isMine
-                        ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-br-xs'
+                        ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-950/50 rounded-br-xs'
                         : msg.is_cheer
-                        ? 'bg-amber-50/90 border border-amber-200 text-amber-950 rounded-bl-xs'
-                        : 'bg-white border border-slate-200 text-slate-800 rounded-bl-xs'
+                        ? 'bg-amber-500/20 border border-amber-500/30 text-amber-200 rounded-bl-xs'
+                        : 'bg-white/10 border border-white/15 text-white rounded-bl-xs'
                     }`}
                   >
                     {msg.is_cheer && (
-                      <div className="flex items-center gap-1 text-[11px] font-bold mb-1 opacity-90 text-amber-700">
-                        <Flame className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                      <div className="flex items-center gap-1 text-[11px] font-bold mb-1 text-amber-300">
+                        <Flame className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                         Habit Cheer & Nudge
                       </div>
                     )}
                     <p className="leading-relaxed whitespace-pre-wrap">{msg.content}</p>
                     <div
                       className={`text-[10px] mt-1 flex items-center justify-end gap-1 ${
-                        isMine ? 'text-emerald-100' : 'text-slate-400'
+                        isMine ? 'text-emerald-200' : 'text-slate-400'
                       }`}
                     >
                       <span>
@@ -182,7 +182,7 @@ export function MessageModal({ isOpen, onClose, friend }: MessageModalProps) {
                           minute: '2-digit',
                         })}
                       </span>
-                      {isMine && <CheckCheck className="w-3 h-3" />}
+                      {isMine && <CheckCheck className="w-3 h-3 text-emerald-200" />}
                     </div>
                   </div>
                 </div>
@@ -193,19 +193,19 @@ export function MessageModal({ isOpen, onClose, friend }: MessageModalProps) {
         </div>
 
         {/* Input Bar */}
-        <div className="p-3 bg-white border-t border-slate-200 flex items-center gap-2">
+        <div className="p-3 bg-slate-900 border-t border-white/10 flex items-center gap-2">
           <input
             type="text"
             placeholder={`Message ${friend.full_name.split(' ')[0]}...`}
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex-1 px-4 py-2.5 text-sm rounded-2xl bg-slate-100 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all text-slate-900"
+            className="flex-1 px-4 py-2.5 text-sm rounded-full bg-slate-950 border border-white/15 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 focus:border-emerald-400 text-white placeholder-slate-500 transition-all"
           />
           <button
             onClick={() => handleSend()}
             disabled={!inputText.trim() || isSending}
-            className="p-2.5 px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 disabled:hover:bg-emerald-600 text-white font-bold text-xs shadow-xs transition-all flex items-center gap-1.5 active:scale-95"
+            className="p-2.5 px-4 rounded-full bg-white hover:bg-emerald-50 text-slate-950 font-bold text-xs shadow-lg transition-all flex items-center gap-1.5 active:scale-95 disabled:opacity-40"
           >
             <Send className="w-4 h-4" />
             <span className="hidden sm:inline">Send</span>

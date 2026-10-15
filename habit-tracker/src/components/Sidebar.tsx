@@ -38,40 +38,40 @@ export function Sidebar() {
   }, [pathname]);
 
   return (
-    <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 bg-white border-r border-slate-200 z-30">
+    <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 bg-slate-950/85 backdrop-blur-2xl border-r border-white/10 z-30 text-white">
       {/* Brand Logo */}
-      <div className="h-16 flex items-center px-6 border-b border-slate-100 gap-3">
-        <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-white shadow-md shadow-emerald-500/20">
-          <Sparkles className="w-5 h-5" />
+      <div className="h-16 flex items-center px-6 border-b border-white/10 gap-3">
+        <div className="h-9 w-9 rounded-full border border-white/30 flex items-center justify-center bg-white/10 backdrop-blur-md text-emerald-400 shadow-lg shadow-emerald-950/50">
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
         </div>
         <div>
-          <span className="font-bold text-lg tracking-tight text-slate-900 block leading-none">
-            Habit<span className="text-emerald-600">Forge</span>
+          <span className="font-extrabold text-lg tracking-tight text-white block leading-none">
+            Habit<span className="text-emerald-400 font-light">Depth</span>
           </span>
-          <span className="text-[11px] text-slate-400 font-medium tracking-wide">
-            Daily Momentum
+          <span className="text-[10px] text-slate-400 font-medium tracking-wider uppercase">
+            Atmospheric Habit Tracker
           </span>
         </div>
       </div>
 
       {/* Quick Streak & Points Badge */}
-      <div className="mx-4 my-4 p-3 rounded-xl bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-between">
+      <div className="mx-4 my-4 p-3 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-lg bg-emerald-500 text-white shadow-xs">
-            <Flame className="w-4 h-4 fill-white" />
+          <div className="p-1.5 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/30">
+            <Flame className="w-4 h-4 fill-amber-400" />
           </div>
           <div>
-            <div className="text-xs text-slate-500 font-medium">Streak</div>
-            <div className="text-sm font-bold text-slate-900">{user.current_streak} Days</div>
+            <div className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Streak</div>
+            <div className="text-xs font-extrabold text-white">{user.current_streak} Days</div>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-lg bg-amber-500 text-white shadow-xs">
+          <div className="p-1.5 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
             <Award className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-xs text-slate-500 font-medium">Points</div>
-            <div className="text-sm font-bold text-slate-900">{user.total_points}</div>
+            <div className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Points</div>
+            <div className="text-xs font-extrabold text-emerald-400">{user.total_points}</div>
           </div>
         </div>
       </div>
@@ -85,38 +85,38 @@ export function Sidebar() {
             <Link
               key={item.name}
               href={item.href}
-              className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 ${
+              className={`flex items-center gap-3 px-3.5 py-2.5 rounded-2xl font-medium text-xs transition-all duration-200 ${
                 isActive
-                  ? 'bg-emerald-50 text-emerald-700 font-semibold shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  ? 'bg-white/10 text-white font-bold border border-white/20 shadow-lg shadow-black/20 text-emerald-400'
+                  : 'text-slate-400 hover:text-white hover:bg-white/5'
               }`}
             >
               <Icon
-                className={`w-5 h-5 transition-colors ${
-                  isActive ? 'text-emerald-600' : 'text-slate-400'
+                className={`w-4 h-4 transition-colors ${
+                  isActive ? 'text-emerald-400' : 'text-slate-400'
                 }`}
               />
-              {item.name}
+              <span className={isActive ? 'text-white' : ''}>{item.name}</span>
             </Link>
           );
         })}
       </nav>
 
       {/* User profile card at bottom */}
-      <div className="p-4 border-t border-slate-100">
+      <div className="p-4 border-t border-white/10 bg-slate-950/50">
         <Link
           href="/profile"
-          className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-50 transition-colors"
+          className="flex items-center gap-3 p-2 rounded-2xl hover:bg-white/5 transition-all border border-transparent hover:border-white/10"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={user.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'}
             alt={user.full_name}
-            className="w-10 h-10 rounded-full object-cover ring-2 ring-emerald-500/30"
+            className="w-10 h-10 rounded-full object-cover ring-2 ring-emerald-400/40"
           />
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-slate-900 truncate">{user.full_name}</p>
-            <p className="text-xs text-slate-500 truncate">@{user.username}</p>
+            <p className="text-xs font-bold text-white truncate">{user.full_name}</p>
+            <p className="text-[11px] text-slate-400 truncate">@{user.username}</p>
           </div>
         </Link>
       </div>

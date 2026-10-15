@@ -109,7 +109,7 @@ export default function FriendsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col lg:flex-row pb-20 lg:pb-0">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col lg:flex-row pb-20 lg:pb-0">
       <Sidebar />
 
       <div className="flex-1 lg:pl-64 flex flex-col">
@@ -120,14 +120,14 @@ export default function FriendsPage() {
 
         <main className="p-4 sm:p-6 lg:p-8 space-y-6 max-w-6xl mx-auto w-full">
           {/* Tabs */}
-          <div className="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs">
+          <div className="flex items-center justify-between bg-slate-900/60 backdrop-blur-xl p-4 rounded-3xl border border-white/10 shadow-xl">
             <div className="flex items-center gap-1.5">
               <button
                 onClick={() => setActiveTab('friends')}
                 className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                   activeTab === 'friends'
-                    ? 'bg-emerald-600 text-white shadow-xs'
-                    : 'text-slate-600 hover:bg-slate-100'
+                    ? 'bg-emerald-400 text-slate-950 shadow-md shadow-emerald-500/20'
+                    : 'text-slate-400 hover:text-white hover:bg-white/10'
                 }`}
               >
                 Friends ({friends.length})
@@ -136,8 +136,8 @@ export default function FriendsPage() {
                 onClick={() => setActiveTab('groups')}
                 className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                   activeTab === 'groups'
-                    ? 'bg-emerald-600 text-white shadow-xs'
-                    : 'text-slate-600 hover:bg-slate-100'
+                    ? 'bg-emerald-400 text-slate-950 shadow-md shadow-emerald-500/20'
+                    : 'text-slate-400 hover:text-white hover:bg-white/10'
                 }`}
               >
                 Accountability Groups ({groups.length})
@@ -147,7 +147,7 @@ export default function FriendsPage() {
             {activeTab === 'groups' && (
               <button
                 onClick={() => setIsCreateGroupOpen(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-xs transition-all"
+                className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-slate-950 bg-emerald-400 hover:bg-emerald-300 rounded-xl shadow-md shadow-emerald-500/20 transition-all"
               >
                 <Plus className="w-4 h-4" /> Create Group
               </button>
@@ -164,31 +164,31 @@ export default function FriendsPage() {
                   placeholder="Find a member by @username to connect..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 text-sm rounded-2xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 shadow-xs"
+                  className="w-full pl-10 pr-4 py-2.5 text-sm rounded-2xl border border-white/15 bg-slate-900/60 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 shadow-xl backdrop-blur-xl"
                 />
               </div>
 
               {/* Friend Requests */}
               {friendRequests.length > 0 && (
-                <div className="bg-amber-50/70 border border-amber-200/70 rounded-2xl p-4">
-                  <h3 className="text-xs font-bold text-amber-900 uppercase tracking-wider mb-3">
+                <div className="bg-amber-950/25 border border-amber-500/30 rounded-3xl p-5 backdrop-blur-xl">
+                  <h3 className="text-xs font-bold text-amber-300 uppercase tracking-wider mb-3">
                     Pending Friend Requests ({friendRequests.length})
                   </h3>
                   <div className="space-y-2">
                     {friendRequests.map((req) => (
                       <div
                         key={req.id}
-                        className="flex items-center justify-between p-3 rounded-xl bg-white border border-amber-100 shadow-2xs"
+                        className="flex items-center justify-between p-3.5 rounded-2xl bg-slate-900/80 border border-white/10 shadow-lg"
                       >
                         <div className="flex items-center gap-3">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={req.avatar_url}
                             alt={req.full_name}
-                            className="w-10 h-10 rounded-full object-cover"
+                            className="w-10 h-10 rounded-full object-cover ring-2 ring-emerald-500/30"
                           />
                           <div>
-                            <p className="text-xs font-bold text-slate-900">{req.full_name}</p>
+                            <p className="text-xs font-bold text-white">{req.full_name}</p>
                             <p className="text-[11px] text-slate-400">@{req.username}</p>
                           </div>
                         </div>
@@ -196,13 +196,13 @@ export default function FriendsPage() {
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => handleAcceptRequest(req.id)}
-                            className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-2xs"
+                            className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 text-xs font-bold shadow-md shadow-emerald-500/20"
                           >
                             <Check className="w-3.5 h-3.5" /> Accept
                           </button>
                           <button
                             onClick={() => handleRejectRequest(req.id)}
-                            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+                            className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/10"
                           >
                             <X className="w-4 h-4" />
                           </button>
@@ -214,29 +214,29 @@ export default function FriendsPage() {
               )}
 
               {/* Active Friends List */}
-              <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
-                <h3 className="text-sm font-bold text-slate-900 mb-4">Your Friends</h3>
+              <div className="bg-slate-900/60 backdrop-blur-xl rounded-3xl border border-white/10 p-5 shadow-xl text-white">
+                <h3 className="text-sm font-bold text-white mb-4">Your Friends</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {friends.map((friend) => (
                     <div
                       key={friend.id}
-                      className="p-4 rounded-xl border border-slate-100 bg-slate-50/50 flex items-center justify-between gap-3 hover:border-slate-200 transition-all"
+                      className="p-4 rounded-2xl border border-white/10 bg-slate-950/60 flex items-center justify-between gap-3 hover:border-white/20 transition-all"
                     >
                       <div className="flex items-center gap-3">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={friend.avatar_url}
                           alt={friend.full_name}
-                          className="w-12 h-12 rounded-full object-cover ring-2 ring-emerald-500/20"
+                          className="w-12 h-12 rounded-full object-cover ring-2 ring-emerald-500/30"
                         />
                         <div>
-                          <p className="text-sm font-bold text-slate-900">{friend.full_name}</p>
+                          <p className="text-sm font-bold text-white">{friend.full_name}</p>
                           <p className="text-xs text-slate-400">@{friend.username}</p>
                           <div className="flex items-center gap-2 mt-1">
-                            <span className="text-[11px] font-semibold text-amber-600 flex items-center gap-0.5">
-                              <Flame className="w-3 h-3 fill-amber-500" /> {friend.streak}d
+                            <span className="text-[11px] font-semibold text-amber-400 flex items-center gap-0.5">
+                              <Flame className="w-3 h-3 fill-amber-400" /> {friend.streak}d
                             </span>
-                            <span className="text-[11px] font-semibold text-emerald-600 flex items-center gap-0.5">
+                            <span className="text-[11px] font-semibold text-emerald-400 flex items-center gap-0.5">
                               <Award className="w-3 h-3" /> {friend.points} pts
                             </span>
                           </div>
@@ -246,7 +246,7 @@ export default function FriendsPage() {
                       {/* Today status badge & action buttons */}
                       <div className="flex flex-col items-end gap-2">
                         <div className="text-right">
-                          <span className="text-xs font-bold text-slate-900">
+                          <span className="text-xs font-bold text-white">
                             {friend.todayCompleted}/{friend.todayTotal}
                           </span>
                           <span className="block text-[10px] text-slate-400">habits today</span>
@@ -263,15 +263,15 @@ export default function FriendsPage() {
                               setToastMessage(`Cheered ${friend.full_name}! 🔥`);
                               setTimeout(() => setToastMessage(null), 3000);
                             }}
-                            className="p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200/60 transition-all text-xs font-bold flex items-center gap-1 active:scale-95 shadow-2xs"
+                            className="p-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 transition-all text-xs font-bold flex items-center gap-1 active:scale-95 shadow-sm"
                             title="Send quick cheer"
                           >
-                            <Flame className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                            <Flame className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                           </button>
 
                           <button
                             onClick={() => setActiveChatFriend(friend)}
-                            className="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white transition-all text-xs font-bold flex items-center gap-1 active:scale-95 shadow-2xs"
+                            className="px-2.5 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 transition-all text-xs font-bold flex items-center gap-1 active:scale-95 shadow-sm"
                             title="Send message"
                           >
                             <MessageSquare className="w-3.5 h-3.5" />
@@ -286,11 +286,11 @@ export default function FriendsPage() {
 
               {/* Toast Notification */}
               {toastMessage && (
-                <div className="p-3 rounded-2xl bg-emerald-600 text-white text-xs font-bold flex items-center justify-between shadow-lg animate-in fade-in">
+                <div className="p-3.5 rounded-2xl bg-emerald-500 text-slate-950 text-xs font-bold flex items-center justify-between shadow-xl animate-in fade-in">
                   <span className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-200" /> {toastMessage}
+                    <CheckCircle2 className="w-4 h-4 text-slate-950" /> {toastMessage}
                   </span>
-                  <button onClick={() => setToastMessage(null)} className="text-emerald-200 hover:text-white">
+                  <button onClick={() => setToastMessage(null)} className="text-slate-950/70 hover:text-slate-950 font-black">
                     &times;
                   </button>
                 </div>
@@ -308,27 +308,27 @@ export default function FriendsPage() {
               {groups.map((group) => (
                 <div
                   key={group.id}
-                  className="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs flex flex-col justify-between"
+                  className="bg-slate-900/60 backdrop-blur-xl rounded-3xl border border-white/10 p-6 shadow-xl flex flex-col justify-between text-white"
                 >
                   <div>
                     <div className="flex items-center justify-between gap-2 mb-3">
-                      <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-teal-50 text-teal-700 border border-teal-200">
+                      <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-teal-500/20 text-teal-300 border border-teal-500/30">
                         {group.members_count} Members
                       </span>
-                      <span className="text-xs font-mono font-bold px-2 py-0.5 bg-slate-100 rounded-md text-slate-600">
+                      <span className="text-xs font-mono font-bold px-2 py-0.5 bg-white/10 rounded-md text-slate-300 border border-white/10">
                         Code: {group.invite_code}
                       </span>
                     </div>
 
-                    <h3 className="text-base font-bold text-slate-900">{group.name}</h3>
-                    <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                    <h3 className="text-base font-bold text-white">{group.name}</h3>
+                    <p className="text-xs text-slate-400 mt-1 leading-relaxed">
                       {group.description}
                     </p>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                  <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
                     <span className="text-xs text-slate-400 font-medium">Group Active</span>
-                    <button className="px-3 py-1.5 text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 rounded-xl transition-colors">
+                    <button className="px-3.5 py-1.5 text-xs font-bold text-emerald-300 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 rounded-xl transition-colors">
                       View Challenge Board
                     </button>
                   </div>
@@ -341,16 +341,16 @@ export default function FriendsPage() {
 
       {/* Create Group Modal */}
       {isCreateGroupOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in">
-          <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-100 p-6">
-            <h3 className="text-base font-bold text-slate-900 mb-1">Create Private Group</h3>
-            <p className="text-xs text-slate-500 mb-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in">
+          <div className="relative w-full max-w-md bg-slate-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20 p-6 text-white">
+            <h3 className="text-base font-bold text-white mb-1">Create Private Group</h3>
+            <p className="text-xs text-slate-400 mb-4">
               Invite friends to compete on a shared habit goal.
             </p>
 
             <form onSubmit={handleCreateGroup} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-semibold text-slate-300 mb-1">
                   Group Name
                 </label>
                 <input
@@ -359,12 +359,12 @@ export default function FriendsPage() {
                   placeholder="e.g. 5AM Morning Club, Daily Coders"
                   value={newGroupName}
                   onChange={(e) => setNewGroupName(e.target.value)}
-                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 text-slate-900"
+                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-white/15 bg-slate-950 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-semibold text-slate-300 mb-1">
                   Description & Goal
                 </label>
                 <textarea
@@ -372,7 +372,7 @@ export default function FriendsPage() {
                   placeholder="What habits is this group focusing on?"
                   value={newGroupDesc}
                   onChange={(e) => setNewGroupDesc(e.target.value)}
-                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 text-slate-900 resize-none"
+                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-white/15 bg-slate-950 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 resize-none"
                 />
               </div>
 
@@ -380,13 +380,13 @@ export default function FriendsPage() {
                 <button
                   type="button"
                   onClick={() => setIsCreateGroupOpen(false)}
-                  className="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
+                  className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white rounded-xl hover:bg-white/10 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition-all shadow-xs"
+                  className="px-4 py-2 text-xs font-bold text-slate-950 bg-emerald-400 hover:bg-emerald-300 rounded-xl transition-all shadow-md shadow-emerald-500/20"
                 >
                   Create Group
                 </button>

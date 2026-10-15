@@ -30,27 +30,27 @@ export default function LeaderboardPage() {
   const getRankBadge = (rank: number) => {
     if (rank === 1) {
       return (
-        <div className="w-8 h-8 rounded-full bg-amber-400 text-amber-950 flex items-center justify-center font-black text-sm shadow-md ring-2 ring-amber-300">
-          <Crown className="w-4 h-4 fill-amber-950" />
+        <div className="w-8 h-8 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center font-black text-sm shadow-lg ring-2 ring-amber-300">
+          <Crown className="w-4 h-4 fill-slate-950" />
         </div>
       );
     }
     if (rank === 2) {
       return (
-        <div className="w-8 h-8 rounded-full bg-slate-300 text-slate-800 flex items-center justify-center font-black text-sm shadow-xs ring-2 ring-slate-200">
+        <div className="w-8 h-8 rounded-full bg-slate-300 text-slate-950 flex items-center justify-center font-black text-sm shadow-md ring-2 ring-slate-100">
           2
         </div>
       );
     }
     if (rank === 3) {
       return (
-        <div className="w-8 h-8 rounded-full bg-amber-700 text-white flex items-center justify-center font-black text-sm shadow-xs ring-2 ring-amber-600">
+        <div className="w-8 h-8 rounded-full bg-amber-600 text-white flex items-center justify-center font-black text-sm shadow-md ring-2 ring-amber-500">
           3
         </div>
       );
     }
     return (
-      <div className="w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-xs">
+      <div className="w-8 h-8 rounded-full bg-white/10 border border-white/10 text-slate-400 flex items-center justify-center font-bold text-xs">
         {rank}
       </div>
     );
@@ -60,25 +60,25 @@ export default function LeaderboardPage() {
     switch (status) {
       case 'Leading the Board':
         return (
-          <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-amber-100 text-amber-800 border border-amber-200 flex items-center gap-1">
-            <Crown className="w-3 h-3 text-amber-600" /> Leading
+          <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1 shadow-sm">
+            <Crown className="w-3 h-3 text-amber-400" /> Leading
           </span>
         );
       case 'Perfect Day':
         return (
-          <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center gap-1">
-            <Sparkles className="w-3 h-3 text-emerald-600" /> Perfect Day
+          <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1 shadow-sm">
+            <Sparkles className="w-3 h-3 text-emerald-400" /> Perfect Day
           </span>
         );
       case 'On Track':
         return (
-          <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-teal-100 text-teal-800 border border-teal-200">
+          <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-teal-500/20 text-teal-300 border border-teal-500/30 shadow-sm">
             On Track
           </span>
         );
       case 'Needs a Push':
         return (
-          <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-rose-100 text-rose-800 border border-rose-200">
+          <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-rose-500/20 text-rose-300 border border-rose-500/30 shadow-sm">
             Needs a Push
           </span>
         );
@@ -86,7 +86,7 @@ export default function LeaderboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col lg:flex-row pb-20 lg:pb-0">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col lg:flex-row pb-20 lg:pb-0">
       <Sidebar />
 
       <div className="flex-1 lg:pl-64 flex flex-col">
@@ -94,16 +94,17 @@ export default function LeaderboardPage() {
 
         <main className="p-4 sm:p-6 lg:p-8 space-y-6 max-w-6xl mx-auto w-full">
           {/* Top Banner */}
-          <div className="rounded-2xl bg-gradient-to-r from-amber-500 via-emerald-600 to-teal-700 p-6 sm:p-8 text-white shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6">
-            <div className="space-y-2 text-center sm:text-left">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 text-xs font-semibold backdrop-blur-xs">
+          <div className="rounded-3xl bg-gradient-to-r from-slate-900/95 via-slate-900/80 to-emerald-950/90 border border-white/15 p-6 sm:p-8 text-white shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-6 relative overflow-hidden backdrop-blur-2xl">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="space-y-2 text-center sm:text-left relative z-10">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold backdrop-blur-md border border-white/10">
                 <Trophy className="w-3.5 h-3.5 text-amber-300" />
                 <span>Global Consistency Standings</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
                 Who&apos;s Winning Today?
               </h2>
-              <p className="text-xs sm:text-sm text-white/90 max-w-lg leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-300 max-w-lg leading-relaxed">
                 Rankings are scored fairly by points, completion consistency, and streak momentum.
                 Private habit notes and emails are kept secure.
               </p>
@@ -111,7 +112,7 @@ export default function LeaderboardPage() {
 
             {/* Top Leader Pod */}
             {entries[0] && (
-              <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 flex items-center gap-4 min-w-[240px]">
+              <div className="bg-white/5 backdrop-blur-xl p-4 rounded-2xl border border-white/15 flex items-center gap-4 min-w-[240px] relative z-10 shadow-xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={entries[0].user.avatar_url}
@@ -123,7 +124,7 @@ export default function LeaderboardPage() {
                     <Crown className="w-3.5 h-3.5 fill-amber-300" /> Ranked #1 Today
                   </div>
                   <div className="text-sm font-bold text-white">{entries[0].user.full_name}</div>
-                  <div className="text-xs text-white/80 font-medium">
+                  <div className="text-xs text-slate-300 font-medium">
                     {entries[0].periodPoints} pts • {entries[0].currentStreak}d streak
                   </div>
                 </div>
@@ -132,7 +133,7 @@ export default function LeaderboardPage() {
           </div>
 
           {/* Timeframe Tabs */}
-          <div className="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs">
+          <div className="flex items-center justify-between bg-slate-900/60 backdrop-blur-xl p-4 rounded-3xl border border-white/10 shadow-xl">
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
               {[
                 { id: 'today', label: 'Today' },
@@ -143,10 +144,10 @@ export default function LeaderboardPage() {
                 <button
                   key={t.id}
                   onClick={() => setTab(t.id as any)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all shrink-0 ${
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
                     tab === t.id
-                      ? 'bg-emerald-600 text-white shadow-xs'
-                      : 'text-slate-600 hover:bg-slate-100'
+                      ? 'bg-emerald-400 text-slate-950 shadow-md shadow-emerald-500/20'
+                      : 'text-slate-400 hover:text-white hover:bg-white/10'
                   }`}
                 >
                   {t.label}
@@ -154,32 +155,32 @@ export default function LeaderboardPage() {
               ))}
             </div>
 
-            <div className="hidden sm:flex items-center gap-1.5 text-xs text-slate-500 font-medium">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <div className="hidden sm:flex items-center gap-1.5 text-xs text-slate-400 font-medium">
+              <ShieldCheck className="w-4 h-4 text-emerald-400" />
               <span>Anti-cheat verified calculations</span>
             </div>
           </div>
 
           {/* Leaderboard Table / Cards */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+          <div className="bg-slate-900/60 backdrop-blur-xl rounded-3xl border border-white/10 shadow-xl overflow-hidden text-white">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-slate-100 bg-slate-50/70 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                    <th className="py-3.5 pl-6 pr-3">Rank</th>
-                    <th className="py-3.5 px-3">Member</th>
-                    <th className="py-3.5 px-3">Status</th>
-                    <th className="py-3.5 px-3">Completion Today</th>
-                    <th className="py-3.5 px-3">Streak</th>
-                    <th className="py-3.5 px-3">Consistency</th>
-                    <th className="py-3.5 pr-6 pl-3 text-right">Points</th>
+                  <tr className="border-b border-white/10 bg-white/[0.02] text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                    <th className="py-4 pl-6 pr-3">Rank</th>
+                    <th className="py-4 px-3">Member</th>
+                    <th className="py-4 px-3">Status</th>
+                    <th className="py-4 px-3">Completion Today</th>
+                    <th className="py-4 px-3">Streak</th>
+                    <th className="py-4 px-3">Consistency</th>
+                    <th className="py-4 pr-6 pl-3 text-right">Points</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 text-xs">
+                <tbody className="divide-y divide-white/5 text-xs">
                   {entries.map((entry) => (
                     <tr
                       key={entry.user.id}
-                      className="hover:bg-slate-50/80 transition-colors group"
+                      className="hover:bg-white/[0.03] transition-colors group"
                     >
                       {/* Rank */}
                       <td className="py-4 pl-6 pr-3 whitespace-nowrap">
@@ -196,13 +197,13 @@ export default function LeaderboardPage() {
                               'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'
                             }
                             alt={entry.user.full_name}
-                            className="w-10 h-10 rounded-full object-cover ring-2 ring-slate-200"
+                            className="w-10 h-10 rounded-full object-cover ring-2 ring-white/10"
                           />
                           <div>
-                            <div className="font-bold text-slate-900 flex items-center gap-1.5">
+                            <div className="font-bold text-white flex items-center gap-1.5">
                               <span>{entry.user.full_name}</span>
                               {entry.user.id === 'user-primary-001' && (
-                                <span className="px-1.5 py-0.5 rounded-md text-[9px] font-extrabold bg-emerald-100 text-emerald-800">
+                                <span className="px-1.5 py-0.5 rounded-md text-[9px] font-extrabold bg-emerald-400 text-slate-950">
                                   YOU
                                 </span>
                               )}
@@ -220,13 +221,13 @@ export default function LeaderboardPage() {
                       {/* Today Completion Bar */}
                       <td className="py-4 px-3 whitespace-nowrap">
                         <div className="w-36">
-                          <div className="flex items-center justify-between font-bold text-slate-800 text-[11px] mb-1">
+                          <div className="flex items-center justify-between font-bold text-slate-200 text-[11px] mb-1">
                             <span>
                               {entry.completedToday}/{entry.totalActiveHabits} habits
                             </span>
-                            <span>{entry.todayPercentage}%</span>
+                            <span className="text-emerald-400">{entry.todayPercentage}%</span>
                           </div>
-                          <div className="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
+                          <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
                             <div
                               className="h-full rounded-full transition-all duration-500"
                               style={{
@@ -244,20 +245,20 @@ export default function LeaderboardPage() {
                       </td>
 
                       {/* Streak */}
-                      <td className="py-4 px-3 whitespace-nowrap font-bold text-slate-900">
-                        <div className="flex items-center gap-1 text-amber-600">
-                          <Flame className="w-4 h-4 fill-amber-500 text-amber-500" />
+                      <td className="py-4 px-3 whitespace-nowrap font-bold text-white">
+                        <div className="flex items-center gap-1 text-amber-400">
+                          <Flame className="w-4 h-4 fill-amber-400 text-amber-400" />
                           <span>{entry.currentStreak}d</span>
                         </div>
                       </td>
 
                       {/* Consistency */}
-                      <td className="py-4 px-3 whitespace-nowrap font-semibold text-slate-700">
+                      <td className="py-4 px-3 whitespace-nowrap font-semibold text-slate-300">
                         {entry.weeklyConsistencyRate}%
                       </td>
 
                       {/* Points */}
-                      <td className="py-4 pr-6 pl-3 whitespace-nowrap text-right font-extrabold text-sm text-emerald-600">
+                      <td className="py-4 pr-6 pl-3 whitespace-nowrap text-right font-extrabold text-sm text-emerald-400">
                         {entry.periodPoints} pts
                       </td>
                     </tr>
