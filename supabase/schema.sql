@@ -123,71 +123,86 @@ ALTER TABLE public.group_members ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.point_transactions ENABLE ROW LEVEL SECURITY;
 
 -- PROFILES POLICIES
--- Anyone authenticated can view public profiles for the leaderboard
+DROP POLICY IF EXISTS "Public profiles are viewable by everyone" ON public.profiles;
 CREATE POLICY "Public profiles are viewable by everyone" 
 ON public.profiles FOR SELECT 
 USING (true);
 
+DROP POLICY IF EXISTS "Users can update own profile" ON public.profiles;
 CREATE POLICY "Users can update own profile" 
 ON public.profiles FOR UPDATE 
 USING (auth.uid() = id);
 
+DROP POLICY IF EXISTS "Users can insert own profile" ON public.profiles;
 CREATE POLICY "Users can insert own profile" 
 ON public.profiles FOR INSERT 
 WITH CHECK (auth.uid() = id);
 
 -- HABITS POLICIES
+DROP POLICY IF EXISTS "Users can view own habits" ON public.habits;
 CREATE POLICY "Users can view own habits" 
 ON public.habits FOR SELECT 
 USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can insert own habits" ON public.habits;
 CREATE POLICY "Users can insert own habits" 
 ON public.habits FOR INSERT 
 WITH CHECK (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can update own habits" ON public.habits;
 CREATE POLICY "Users can update own habits" 
 ON public.habits FOR UPDATE 
 USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can delete own habits" ON public.habits;
 CREATE POLICY "Users can delete own habits" 
 ON public.habits FOR DELETE 
 USING (auth.uid() = user_id);
 
 -- HABIT COMPLETIONS POLICIES
+DROP POLICY IF EXISTS "Users can view own completions" ON public.habit_completions;
 CREATE POLICY "Users can view own completions" 
 ON public.habit_completions FOR SELECT 
 USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can insert own completions" ON public.habit_completions;
 CREATE POLICY "Users can insert own completions" 
 ON public.habit_completions FOR INSERT 
 WITH CHECK (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can update own completions" ON public.habit_completions;
 CREATE POLICY "Users can update own completions" 
 ON public.habit_completions FOR UPDATE 
 USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can delete own completions" ON public.habit_completions;
 CREATE POLICY "Users can delete own completions" 
 ON public.habit_completions FOR DELETE 
 USING (auth.uid() = user_id);
 
 -- FRIENDSHIPS POLICIES
+DROP POLICY IF EXISTS "Users can view their friendships" ON public.friendships;
 CREATE POLICY "Users can view their friendships" 
 ON public.friendships FOR SELECT 
 USING (auth.uid() = requester_id OR auth.uid() = receiver_id);
 
+DROP POLICY IF EXISTS "Users can create friendship requests" ON public.friendships;
 CREATE POLICY "Users can create friendship requests" 
 ON public.friendships FOR INSERT 
 WITH CHECK (auth.uid() = requester_id);
 
+DROP POLICY IF EXISTS "Users can update friendship requests sent to them" ON public.friendships;
 CREATE POLICY "Users can update friendship requests sent to them" 
 ON public.friendships FOR UPDATE 
 USING (auth.uid() = receiver_id OR auth.uid() = requester_id);
 
+DROP POLICY IF EXISTS "Users can delete their friendships" ON public.friendships;
 CREATE POLICY "Users can delete their friendships" 
 ON public.friendships FOR DELETE 
 USING (auth.uid() = requester_id OR auth.uid() = receiver_id);
 
 -- GROUPS & MEMBERS POLICIES
+DROP POLICY IF EXISTS "Group members can view groups" ON public.groups;
 CREATE POLICY "Group members can view groups" 
 ON public.groups FOR SELECT 
 USING (
@@ -195,23 +210,28 @@ USING (
     EXISTS (SELECT 1 FROM public.group_members WHERE group_id = groups.id AND user_id = auth.uid())
 );
 
+DROP POLICY IF EXISTS "Users can create groups" ON public.groups;
 CREATE POLICY "Users can create groups" 
 ON public.groups FOR INSERT 
 WITH CHECK (auth.uid() = owner_id);
 
+DROP POLICY IF EXISTS "Owners can update groups" ON public.groups;
 CREATE POLICY "Owners can update groups" 
 ON public.groups FOR UPDATE 
 USING (auth.uid() = owner_id);
 
+DROP POLICY IF EXISTS "Members can view membership" ON public.group_members;
 CREATE POLICY "Members can view membership" 
 ON public.group_members FOR SELECT 
 USING (true);
 
+DROP POLICY IF EXISTS "Users can join groups" ON public.group_members;
 CREATE POLICY "Users can join groups" 
 ON public.group_members FOR INSERT 
 WITH CHECK (auth.uid() = user_id);
 
 -- POINT TRANSACTIONS POLICIES
+DROP POLICY IF EXISTS "Users can view their point ledger" ON public.point_transactions;
 CREATE POLICY "Users can view their point ledger" 
 ON public.point_transactions FOR SELECT 
 USING (auth.uid() = user_id);
