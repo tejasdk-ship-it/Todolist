@@ -103,3 +103,14 @@ export interface LeaderboardEntry {
   weeklyConsistencyRate: number;
   statusTag: 'Leading the Board' | 'Perfect Day' | 'On Track' | 'Needs a Push';
 }
+
+export interface FriendMessage {
+  id: string;
+  sender_id: string;
+  receiver_id: string;
+  sender_name: string;
+  sender_avatar?: string;
+  content: string;
+  created_at: string;
+  is_cheer?: boolean;
+}

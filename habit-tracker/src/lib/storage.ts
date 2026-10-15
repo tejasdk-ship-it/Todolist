@@ -7,6 +7,7 @@ import {
   LeaderboardEntry,
   GroupChallenge,
   Friendship,
+  FriendMessage,
 } from '@/types';
 import {
   INITIAL_USER,
@@ -24,14 +25,47 @@ import {
 import { getTodayDateString } from './utils';
 
 const STORAGE_KEYS = {
+  AUTH_LOGGED_IN: 'habittracker_auth_logged_in',
   USER: 'habittracker_user_profile',
   HABITS: 'habittracker_habits',
   COMPLETIONS: 'habittracker_completions',
   FRIENDSHIPS: 'habittracker_friendships',
   GROUPS: 'habittracker_groups',
   LEADERBOARD: 'habittracker_leaderboard',
-  AUTH_LOGGED_IN: 'habittracker_is_logged_in',
+  MESSAGES: 'habittracker_messages',
 };
+
+const INITIAL_MESSAGES: FriendMessage[] = [
+  {
+    id: 'msg-1',
+    sender_id: 'user-002',
+    receiver_id: 'user-primary-001',
+    sender_name: 'Sarah Jenkins',
+    sender_avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150',
+    content: "Awesome consistency on the morning run today! Let's hit that 100% daily completion! 🔥",
+    created_at: '2026-10-14T08:15:00Z',
+    is_cheer: true,
+  },
+  {
+    id: 'msg-2',
+    sender_id: 'user-primary-001',
+    receiver_id: 'user-002',
+    sender_name: 'Alex Tracker',
+    sender_avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150',
+    content: 'Thanks Sarah! Your 24-day streak is super motivating. Going to finish the coding block this afternoon!',
+    created_at: '2026-10-14T08:30:00Z',
+  },
+  {
+    id: 'msg-3',
+    sender_id: 'user-004',
+    receiver_id: 'user-primary-001',
+    sender_name: 'Elena Rostova',
+    sender_avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150',
+    content: 'Loved the meditation notes today. Remember: 15 minutes of calm sets the tone for the entire day. 🧘‍♀️✨',
+    created_at: '2026-10-14T09:05:00Z',
+    is_cheer: true,
+  },
+];
 
 export class AppStorage {
   private static isClient(): boolean {
@@ -335,6 +369,56 @@ export class AppStorage {
     return newGroup;
   }
 
+  // --- Friend Messaging & Cheers ---
+  static getMessages(friendId?: string): FriendMessage[] {
+    if (!this.isClient()) return INITIAL_MESSAGES;
+    const raw = localStorage.getItem(STORAGE_KEYS.MESSAGES);
+    let msgs: FriendMessage[] = [];
+    if (!raw) {
+      this.setMessages(INITIAL_MESSAGES);
+      msgs = INITIAL_MESSAGES;
+    } else {
+      try {
+        msgs = JSON.parse(raw);
+      } catch {
+        msgs = INITIAL_MESSAGES;
+      }
+    }
+
+    if (friendId) {
+      const user = this.getUser();
+      return msgs.filter(
+        (m) =>
+          (m.sender_id === user.id && m.receiver_id === friendId) ||
+          (m.sender_id === friendId && m.receiver_id === user.id)
+      );
+    }
+    return msgs;
+  }
+
+  static setMessages(messages: FriendMessage[]): void {
+    if (!this.isClient()) return;
+    localStorage.setItem(STORAGE_KEYS.MESSAGES, JSON.stringify(messages));
+  }
+
+  static sendMessage(receiverId: string, content: string, isCheer?: boolean): FriendMessage {
+    const user = this.getUser();
+    const msgs = this.getMessages();
+    const newMsg: FriendMessage = {
+      id: `msg-${Date.now()}`,
+      sender_id: user.id,
+      receiver_id: receiverId,
+      sender_name: user.full_name,
+      sender_avatar: user.avatar_url,
+      content,
+      created_at: new Date().toISOString(),
+      is_cheer: Boolean(isCheer),
+    };
+    msgs.push(newMsg);
+    this.setMessages(msgs);
+    return newMsg;
+  }
+
   // Reset to default seed
   static resetToDemoData(): void {
     if (!this.isClient()) return;
@@ -343,6 +427,7 @@ export class AppStorage {
     this.setHabits(INITIAL_HABITS);
     this.setCompletions(generatePastCompletions(getTodayDateString()));
     this.setGroups(INITIAL_GROUPS);
+    this.setMessages(INITIAL_MESSAGES);
     this.setLoggedIn(true);
   }
 }

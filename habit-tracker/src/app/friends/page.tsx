@@ -12,17 +12,29 @@ import {
   Plus,
   Flame,
   Award,
+  MessageSquare,
+  CheckCircle2,
 } from 'lucide-react';
 import { AppStorage } from '@/lib/storage';
 import { GroupChallenge, UserProfile } from '@/types';
 import { Sidebar } from '@/components/Sidebar';
 import { MobileNav } from '@/components/MobileNav';
 import { Navbar } from '@/components/Navbar';
+import { MessageModal } from '@/components/MessageModal';
+import { UserCompetitionRace } from '@/components/UserCompetitionRace';
 
 export default function FriendsPage() {
   const [activeTab, setActiveTab] = useState<'friends' | 'groups'>('friends');
   const [searchQuery, setSearchQuery] = useState('');
   const [groups, setGroups] = useState<GroupChallenge[]>([]);
+  const [activeChatFriend, setActiveChatFriend] = useState<{
+    id: string;
+    full_name: string;
+    username: string;
+    avatar_url: string;
+    streak?: number;
+  } | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isCreateGroupOpen, setIsCreateGroupOpen] = useState(false);
   const [newGroupName, setNewGroupName] = useState('');
   const [newGroupDesc, setNewGroupDesc] = useState('');
@@ -231,17 +243,64 @@ export default function FriendsPage() {
                         </div>
                       </div>
 
-                      {/* Today status badge */}
-                      <div className="text-right">
-                        <span className="text-xs font-bold text-slate-900">
-                          {friend.todayCompleted}/{friend.todayTotal}
-                        </span>
-                        <span className="block text-[10px] text-slate-400">habits today</span>
+                      {/* Today status badge & action buttons */}
+                      <div className="flex flex-col items-end gap-2">
+                        <div className="text-right">
+                          <span className="text-xs font-bold text-slate-900">
+                            {friend.todayCompleted}/{friend.todayTotal}
+                          </span>
+                          <span className="block text-[10px] text-slate-400">habits today</span>
+                        </div>
+
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            onClick={() => {
+                              AppStorage.sendMessage(
+                                friend.id,
+                                '🔥 Keep up the awesome streak! Proud of you!',
+                                true
+                              );
+                              setToastMessage(`Cheered ${friend.full_name}! 🔥`);
+                              setTimeout(() => setToastMessage(null), 3000);
+                            }}
+                            className="p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200/60 transition-all text-xs font-bold flex items-center gap-1 active:scale-95 shadow-2xs"
+                            title="Send quick cheer"
+                          >
+                            <Flame className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                          </button>
+
+                          <button
+                            onClick={() => setActiveChatFriend(friend)}
+                            className="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white transition-all text-xs font-bold flex items-center gap-1 active:scale-95 shadow-2xs"
+                            title="Send message"
+                          >
+                            <MessageSquare className="w-3.5 h-3.5" />
+                            <span className="hidden sm:inline">Message</span>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
+
+              {/* Toast Notification */}
+              {toastMessage && (
+                <div className="p-3 rounded-2xl bg-emerald-600 text-white text-xs font-bold flex items-center justify-between shadow-lg animate-in fade-in">
+                  <span className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-200" /> {toastMessage}
+                  </span>
+                  <button onClick={() => setToastMessage(null)} className="text-emerald-200 hover:text-white">
+                    &times;
+                  </button>
+                </div>
+              )}
+
+              {/* User Competition Live Progress List */}
+              <UserCompetitionRace
+                title="Live User Competition & Progress"
+                subtitle="Watch live daily habit completion like a race — cheer on partners or send a message"
+              />
             </div>
           ) : (
             /* Groups View */
@@ -335,6 +394,15 @@ export default function FriendsPage() {
             </form>
           </div>
         </div>
+      )}
+
+      {/* Message / Chat Modal */}
+      {activeChatFriend && (
+        <MessageModal
+          isOpen={Boolean(activeChatFriend)}
+          onClose={() => setActiveChatFriend(null)}
+          friend={activeChatFriend}
+        />
       )}
 
       <MobileNav />

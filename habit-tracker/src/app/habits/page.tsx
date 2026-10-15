@@ -22,11 +22,14 @@ import { Sidebar } from '@/components/Sidebar';
 import { MobileNav } from '@/components/MobileNav';
 import { Navbar } from '@/components/Navbar';
 import { AddHabitModal } from '@/components/AddHabitModal';
+import { Pagination } from '@/components/Pagination';
 
 export default function HabitsPage() {
   const [habits, setHabits] = useState<Habit[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedStatus, setSelectedStatus] = useState<string>('active');
+  const [currentPage, setCurrentPage] = useState(1);
+  const HABITS_PER_PAGE = 6;
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingHabit, setEditingHabit] = useState<Habit | null>(null);
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
@@ -64,6 +67,22 @@ export default function HabitsPage() {
     const matchesStatus = selectedStatus === 'all' || h.status === selectedStatus;
     return matchesCategory && matchesStatus;
   });
+
+  const totalPages = Math.max(1, Math.ceil(filteredHabits.length / HABITS_PER_PAGE));
+  const paginatedHabits = filteredHabits.slice(
+    (currentPage - 1) * HABITS_PER_PAGE,
+    currentPage * HABITS_PER_PAGE
+  );
+
+  const handleCategorySelect = (cat: string) => {
+    setSelectedCategory(cat);
+    setCurrentPage(1);
+  };
+
+  const handleStatusSelect = (st: string) => {
+    setSelectedStatus(st);
+    setCurrentPage(1);
+  };
 
   const CATEGORIES = [
     'All',
@@ -103,7 +122,7 @@ export default function HabitsPage() {
               ].map((tab) => (
                 <button
                   key={tab.id}
-                  onClick={() => setSelectedStatus(tab.id)}
+                  onClick={() => handleStatusSelect(tab.id)}
                   className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors shrink-0 ${
                     selectedStatus === tab.id
                       ? 'bg-emerald-600 text-white shadow-xs'
@@ -120,7 +139,7 @@ export default function HabitsPage() {
               <Filter className="w-4 h-4 text-slate-400" />
               <select
                 value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
+                onChange={(e) => handleCategorySelect(e.target.value)}
                 className="px-3 py-1.5 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
               >
                 {CATEGORIES.map((cat) => (
@@ -153,127 +172,139 @@ export default function HabitsPage() {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredHabits.map((habit) => (
-                <div
-                  key={habit.id}
-                  className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
-                >
-                  <div>
-                    {/* Top Row: Category Pill & Status Badge */}
-                    <div className="flex items-center justify-between gap-2 mb-3">
-                      <span
-                        className="px-2.5 py-1 rounded-full text-[10px] font-bold text-white shadow-2xs"
-                        style={{ backgroundColor: habit.color }}
-                      >
-                        {habit.category}
-                      </span>
-
-                      <div className="flex items-center gap-1.5">
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {paginatedHabits.map((habit) => (
+                  <div
+                    key={habit.id}
+                    className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
+                  >
+                    <div>
+                      {/* Top Row: Category Pill & Status Badge */}
+                      <div className="flex items-center justify-between gap-2 mb-3">
                         <span
-                          className={`px-2 py-0.5 rounded-md text-[10px] font-bold uppercase ${
-                            habit.status === 'active'
-                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                              : habit.status === 'paused'
-                              ? 'bg-amber-50 text-amber-700 border border-amber-200'
-                              : 'bg-slate-100 text-slate-600'
-                          }`}
+                          className="px-2.5 py-1 rounded-full text-[10px] font-bold text-white shadow-2xs"
+                          style={{ backgroundColor: habit.color }}
                         >
-                          {habit.status}
+                          {habit.category}
                         </span>
-                      </div>
-                    </div>
 
-                    {/* Title & Description */}
-                    <h3 className="text-base font-bold text-slate-900 leading-snug">
-                      {habit.name}
-                    </h3>
-                    {habit.description && (
-                      <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
-                        {habit.description}
-                      </p>
-                    )}
-
-                    {/* Metadata Badges */}
-                    <div className="mt-4 pt-3 border-t border-slate-100 space-y-1.5 text-xs text-slate-600">
-                      <div className="flex items-center justify-between">
-                        <span className="text-slate-400 flex items-center gap-1">
-                          <Clock className="w-3.5 h-3.5" /> Target Duration
-                        </span>
-                        <span className="font-semibold text-slate-800">
-                          {habit.target_duration_minutes} mins
-                        </span>
-                      </div>
-
-                      {habit.preferred_time && (
-                        <div className="flex items-center justify-between">
-                          <span className="text-slate-400 flex items-center gap-1">
-                            <Clock className="w-3.5 h-3.5" /> Scheduled Time
-                          </span>
-                          <span className="font-semibold text-slate-800">
-                            {formatTime(habit.preferred_time)}
+                        <div className="flex items-center gap-1.5">
+                          <span
+                            className={`px-2 py-0.5 rounded-md text-[10px] font-bold uppercase ${
+                              habit.status === 'active'
+                                ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                                : habit.status === 'paused'
+                                ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                                : 'bg-slate-100 text-slate-600'
+                            }`}
+                          >
+                            {habit.status}
                           </span>
                         </div>
+                      </div>
+
+                      {/* Title & Description */}
+                      <h3 className="text-base font-bold text-slate-900 leading-snug">
+                        {habit.name}
+                      </h3>
+                      {habit.description && (
+                        <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                          {habit.description}
+                        </p>
                       )}
 
-                      <div className="flex items-center justify-between">
-                        <span className="text-slate-400 flex items-center gap-1">
-                          <Calendar className="w-3.5 h-3.5" /> Frequency
-                        </span>
-                        <span className="font-semibold text-slate-800 capitalize">
-                          {habit.frequency_type}
-                        </span>
+                      {/* Metadata Badges */}
+                      <div className="mt-4 pt-3 border-t border-slate-100 space-y-1.5 text-xs text-slate-600">
+                        <div className="flex items-center justify-between">
+                          <span className="text-slate-400 flex items-center gap-1">
+                            <Clock className="w-3.5 h-3.5" /> Target Duration
+                          </span>
+                          <span className="font-semibold text-slate-800">
+                            {habit.target_duration_minutes} mins
+                          </span>
+                        </div>
+
+                        {habit.preferred_time && (
+                          <div className="flex items-center justify-between">
+                            <span className="text-slate-400 flex items-center gap-1">
+                              <Clock className="w-3.5 h-3.5" /> Scheduled Time
+                            </span>
+                            <span className="font-semibold text-slate-800">
+                              {formatTime(habit.preferred_time)}
+                            </span>
+                          </div>
+                        )}
+
+                        <div className="flex items-center justify-between">
+                          <span className="text-slate-400 flex items-center gap-1">
+                            <Calendar className="w-3.5 h-3.5" /> Frequency
+                          </span>
+                          <span className="font-semibold text-slate-800 capitalize">
+                            {habit.frequency_type}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Actions Footer */}
+                    <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between">
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => handleToggleStatus(habit)}
+                          className="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors"
+                          title={habit.status === 'active' ? 'Pause Habit' : 'Resume Habit'}
+                        >
+                          {habit.status === 'active' ? (
+                            <Pause className="w-4 h-4 text-amber-600" />
+                          ) : (
+                            <Play className="w-4 h-4 text-emerald-600" />
+                          )}
+                        </button>
+
+                        <button
+                          onClick={() => handleArchive(habit)}
+                          className="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors"
+                          title={habit.status === 'archived' ? 'Unarchive' : 'Archive Habit'}
+                        >
+                          <Archive className="w-4 h-4" />
+                        </button>
+                      </div>
+
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => {
+                            setEditingHabit(habit);
+                            setIsAddModalOpen(true);
+                          }}
+                          className="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors"
+                          title="Edit Habit"
+                        >
+                          <Edit2 className="w-4 h-4" />
+                        </button>
+
+                        <button
+                          onClick={() => setDeleteTargetId(habit.id)}
+                          className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                          title="Delete Habit"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
                       </div>
                     </div>
                   </div>
+                ))}
+              </div>
 
-                  {/* Actions Footer */}
-                  <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between">
-                    <div className="flex items-center gap-1">
-                      <button
-                        onClick={() => handleToggleStatus(habit)}
-                        className="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors"
-                        title={habit.status === 'active' ? 'Pause Habit' : 'Resume Habit'}
-                      >
-                        {habit.status === 'active' ? (
-                          <Pause className="w-4 h-4 text-amber-600" />
-                        ) : (
-                          <Play className="w-4 h-4 text-emerald-600" />
-                        )}
-                      </button>
-
-                      <button
-                        onClick={() => handleArchive(habit)}
-                        className="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors"
-                        title={habit.status === 'archived' ? 'Unarchive' : 'Archive Habit'}
-                      >
-                        <Archive className="w-4 h-4" />
-                      </button>
-                    </div>
-
-                    <div className="flex items-center gap-1">
-                      <button
-                        onClick={() => {
-                          setEditingHabit(habit);
-                          setIsAddModalOpen(true);
-                        }}
-                        className="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors"
-                        title="Edit Habit"
-                      >
-                        <Edit2 className="w-4 h-4" />
-                      </button>
-
-                      <button
-                        onClick={() => setDeleteTargetId(habit.id)}
-                        className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
-                        title="Delete Habit"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
+              {/* Pagination Controls */}
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                totalItems={filteredHabits.length}
+                itemsPerPage={HABITS_PER_PAGE}
+                onPageChange={setCurrentPage}
+                label="habits"
+              />
             </div>
           )}
         </main>
